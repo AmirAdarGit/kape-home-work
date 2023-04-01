@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { DISCOUNT } from "../utils/constants";
 
 
 interface Props {
@@ -26,7 +27,7 @@ export const DiscountCircleComponent: React.FC<Props> = ({discountPercentage}) =
   return (
     <WrapperStyle>
       <div style={{fontSize: '25px', paddingTop: '8px'}}>{ discountPercentage }%</div>
-      <div style={{fontSize:'12px'}}>Discount</div>
+      <div style={{fontSize:'12px'}}>{DISCOUNT}</div>
     </WrapperStyle>
   );
 }

@@ -5,18 +5,16 @@ export const plans: Array<IPlan> = [
     type: 'Extended',
     buttonNowType: 'filled',
     title: "Extended Protection",
+    subTitle: "Online Privacy And Windows PC Antivirus",
     price: null,
     oldPrice: null,
+    isBestValue: false,
+    discountPercentage: null,
+    monthlyPayment: null,
     infoList:
       {
         label: "Extended protection includes",
         moreInfo: [
-          {
-            infoTitle: "get 70%",
-            moreInfo: "",
-            isMarked: false,
-            isBold: true
-          },
           {
             infoTitle: "2 years protection",
             moreInfo: "",
@@ -43,14 +41,18 @@ export const plans: Array<IPlan> = [
     type: 'Advanced',
     buttonNowType: 'empty',
     title: "Advanced Protection",
+    subTitle: "Online Privacy Features",
     price: null,
     oldPrice: null,
+    isBestValue: false,
+    discountPercentage: null,
+    monthlyPayment: null,
     infoList:
       {
         label: "Advanced protection includes",
         moreInfo: [
           {
-            infoTitle: "Essential Protection Plan:",
+            infoTitle: "Essential Protection Plan",
             moreInfo: "",
             isMarked: true,
             isBold: false
@@ -81,8 +83,12 @@ export const plans: Array<IPlan> = [
     type: 'Essential',
     buttonNowType: 'empty',
     title: "Essential Protection",
+    subTitle: "Online Privacy And Windows PC Antivirus",
     price: null,
     oldPrice: null,
+    isBestValue: false,
+    discountPercentage: null,
+    monthlyPayment: null,
     infoList:
       {
         label: "Essential protection includes",

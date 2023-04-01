@@ -9,24 +9,29 @@ interface Props {
 }
 
 
-const WrapperStyle = styled.div`
+const WrapperStyle = styled.div<{shouldMark: boolean}>`
   display: flex;
+  background-color: ${ (props: any) => props.shouldMark ? '#FFF9C0' : 'white' };
+  border-radius: 8px;
+  margin: 4px;
+  
 `;
-
-
 
 
 export const PlanInfoComponent: React.FC<Props> = (({planInfo}) => {
 
-  console.log(planInfo)
   return (
-    <WrapperStyle style={{display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: 'center', padding: '4px'}}>
-      <img style={{width: '10px', height: '10px', alignSelf: "center", paddingRight: '2px'}} src={ check } alt="My Icon"/>
-      <div style={{fontSize: '15px'}}>
-        {planInfo.infoTitle}
-      </div>
-      <div style={{fontSize: '15px'}}>
-        {planInfo.moreInfo}
+    <WrapperStyle shouldMark={planInfo.isMarked}
+      style={ {display: "flex", flexDirection: "row", alignItems: 'center', padding: '4px'} }>
+      <img style={ {width: '13px', height: '13px', alignSelf: "start", padding: '4px'} } src={ check }
+           alt="My Icon"/>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={ {fontSize: '15px', alignSelf: "start", fontWeight:'bold', color: `${planInfo.isBold ? "red" : "black"}`} }>
+          { planInfo.infoTitle }
+        </div>
+        <div style={ {fontSize: '15px', textAlign: "left", } }>
+          { planInfo.moreInfo }
+        </div>
       </div>
     </WrapperStyle>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { BEST_VALUE } from "../utils/constants";
 
 
 interface Props {
@@ -17,6 +18,8 @@ const WrapperStyle = styled.div`
   font-weight: bold;
   line-height: 20px;
   align-self: center;
+  position: absolute;
+  top: 20px;
 `;
 
 
@@ -25,7 +28,7 @@ export const BestValueComponent: React.FC<Props> = () => {
 
   return (
     <WrapperStyle>
-      Best Value
+      {BEST_VALUE}
     </WrapperStyle>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { BUY_NOW } from "../utils/constants";
 
 
 interface Props {
@@ -19,17 +20,13 @@ const ButtonStyle = styled.button`
   &:hover {
     background-color: #FFD700;
   }
-  
 `;
-
-
-
 
 export const BuyNowButton: React.FC<Props> = () => {
 
 
   return (
-      <ButtonStyle onClick={() => console.log("amir")}> Buy Now</ButtonStyle>
+      <ButtonStyle onClick={() => console.log("amir")}>{BUY_NOW}</ButtonStyle> //TODO: implement the analytics
   );
 }
 
