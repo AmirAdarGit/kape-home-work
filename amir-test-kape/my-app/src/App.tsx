@@ -8,8 +8,8 @@ function App() {
 
 
   useEffect( () => {
-    const userId = localStorage.getItem('userId');
-    sendTrackEvent(ExternalTrackEvents.LANDING_PAGE, userId)
+    const userJWT = localStorage.getItem('Authorization');
+    sendTrackEvent(ExternalTrackEvents.LANDING_PAGE, userJWT)
   }, []);
 
 
