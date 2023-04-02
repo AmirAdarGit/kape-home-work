@@ -8,13 +8,13 @@ import { createNewTable } from "./database/prices-db/create-prices-collection";
 
 dotenv.config();
 
-const appa = express();
-appa.use(bodyParser.urlencoded({extended: true}));
-appa.use(bodyParser.json());
-appa.use(cors());
+const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cors());
 
 const router: Router = express.Router();
-appa.use('/', router);
+app.use('/', router);
 
 db.getConnection();
 
@@ -64,4 +64,4 @@ router.post('/createPriceModel', async (req: Request, res: Response) => {
 
 
 
-export default appa;
+export default app;
