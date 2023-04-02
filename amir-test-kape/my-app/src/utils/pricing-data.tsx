@@ -1,6 +1,6 @@
 import { IPlan } from "./interfaces";
 
-export const plans: Array<IPlan> = [
+export const allPlansFromStates: Array<IPlan> = [
   {
     type: 'Extended',
     buttonNowType: 'filled',

@@ -1,4 +1,6 @@
 import { IPlan } from "./interfaces";
+import axios, { AxiosResponse } from "axios";
+import { USER_EVENT_URL } from "./constants";
 
 
 export const getDiscountPercentageFunc = (oldPrice: number, newPrice: number) => {
@@ -45,6 +47,21 @@ export const injectPlanData = (thePrice: IPlan, allPlansFromServer: any, current
   return {copyPlan, currentBestDiscount, currentBestPlan};
 }
 
-
+export const sendTrackEvent = async (eventType: string, userId: string | null, planTitle?: string) => {
+  try {
+    const response: AxiosResponse = await axios.post(USER_EVENT_URL, { eventType, userId, planTitle });
+    localStorage.setItem('userId', response.data.userId);
+  } catch (error: any) {
+    console.error('Error:', error);
+  }
+}
+export const getPricesByBundle = async () => {
+  try {
+    const response: AxiosResponse = await axios.get('localhost:4000/getPriceByBundle/?bundle=*&currency=usd', );
+    return response.data
+  } catch (error: any) {
+    console.error('Error:', error);
+  }
+}
 
 

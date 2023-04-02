@@ -2,14 +2,10 @@ import React, {useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import  { PlanComponent } from "./plan-component";
 import { IPlan } from "../utils/interfaces";
-import { plans } from "../utils/pricing-data";
+import { allPlansFromStates } from "../utils/pricing-data";
 import { injectPlanData } from "../utils/share-function";
-import { DEVICE } from "../utils/constants";
-
-interface Props {
-
-}
-
+import { DEVICE, GET_PRICE_BY_BUNDLE } from "../utils/constants";
+import axios, { AxiosResponse } from "axios";
 
 const WrapperStyle = styled.div`
   display: flex;
@@ -19,72 +15,62 @@ const WrapperStyle = styled.div`
   @media ${DEVICE.mobileL} {
     flex-direction: column;
   }
-  
-  
 `;
 
+export const PlansComponent: React.FC = (() => {
 
-export const PlansComponent: React.FC<Props> = (() => {
+  const [planList, setPlanList] = useState<IPlan[]>();
+  const [pricesList, setPricesList] = useState<any>(null);//TODO: create interface
 
-  const [planList, setPlanList] = useState<IPlan[]>(plans);
+
   useEffect(() => {
-    // fetch all the discounts from the get http://localhost:3001/getPriceByBundle/?bundle=*&currency=usd API
-    const allPlansFromServer: any = {
-      "original": {
-        "essential": {
-          "USD": "49.99"
-        },
-        "advanced": {
-          "USD": "80.99"
-        },
-        "vpn_addon": {
-          "USD": "19.99"
-        }
-      },
-      "offers": {
-        "essential": {
-          "USD": "29.99"
-        },
-        "advanced": {
-          "USD": "69.99"
-        },
-        "vpn_addon": {
-          "USD": "19.99"
-        }
+    const getPricesByBundleFromServer = async () => {
+      try {
+        const response: AxiosResponse = await axios.get(GET_PRICE_BY_BUNDLE);
+        setPricesList(response.data.prices[0])
+      } catch (error: any) {
+        console.error('Error:', error);
       }
     }
+    getPricesByBundleFromServer()
+  },[])
 
 
-    if (planList) {
+  useEffect(() => {
+
+    if (pricesList && allPlansFromStates) {
       const copyPlans: IPlan[] = [];
       let bestDiscount = 0;
       let bestPlan: string;
-      planList.forEach((thePrice: IPlan) => {
+      allPlansFromStates.forEach((thePrice: IPlan) => {
         const {
           copyPlan,
           currentBestDiscount,
           currentBestPlan
-        } = injectPlanData(thePrice, allPlansFromServer, bestDiscount, bestPlan)
+        } = injectPlanData(thePrice, pricesList, bestDiscount, bestPlan)
         bestDiscount = currentBestDiscount;
         bestPlan = currentBestPlan;
         copyPlans.push(copyPlan)
       })
-      copyPlans.forEach(plan => {
+      const filteredPlans = copyPlans.map(plan => {
         if (plan.title === bestPlan) {
           plan.isBestValue = true;
         }
+        return plan
+      }).filter((plan) => {
+        return plan.price !== null
       })
-      console.log(copyPlans)
-      setPlanList(copyPlans)
+
+      setPlanList(filteredPlans)
     } else {
       console.log("Cannot get pricing")
     }
-  }, [])
+  }, [pricesList])
 
 
   return (
     <WrapperStyle>
-      {
+      {planList &&
         planList.map((plan, index) => {
           return <PlanComponent key={ index } plan={ plan }/>
         }) }

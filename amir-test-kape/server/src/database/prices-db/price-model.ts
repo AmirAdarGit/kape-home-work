@@ -25,4 +25,4 @@ const priceSchema = new mongoose.Schema({
   }
 });
 
-export const Price = mongoose.model('Price', priceSchema);
+export const Prices = mongoose.model('Prices', priceSchema);

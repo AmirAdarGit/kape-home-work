@@ -5,11 +5,9 @@ class Database {
   private db: mongoose.Connection;
 
   private constructor() {
-    console.log("2020202020202")
     mongoose.connect('mongodb://localhost:27017', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-
     } as any);
 
     this.db = mongoose.connection;

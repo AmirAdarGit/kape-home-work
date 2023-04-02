@@ -69,7 +69,7 @@ export const PlanComponent: React.FC<Props> = ({plan}) => {
             <div style={ {textDecoration: 'line-through', padding: "0 4px 0 4px"} }> ${ plan.oldPrice } </div>
             <div>{FOR_THE_FIRST_YEAR}</div>
           </div>
-          <BuyNowButton/>
+          <BuyNowButton planTitle={plan.title}/>
 
 
           <div style={ {display: 'flex', justifyContent: 'center', fontSize: '8px'} }>

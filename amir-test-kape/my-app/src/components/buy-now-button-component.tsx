@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { BUY_NOW } from "../utils/constants";
+import { sendTrackEvent } from "../utils/share-function";
+import { ExternalTrackEvents } from "../utils/interfaces";
 
 
 interface Props {
-
+  planTitle: string;
 }
 
 
@@ -22,11 +24,15 @@ const ButtonStyle = styled.button`
   }
 `;
 
-export const BuyNowButton: React.FC<Props> = () => {
+export const BuyNowButton: React.FC<Props> = ({planTitle}) => {
 
+  const userId = localStorage.getItem('userId'); // on landing page we generate userId so if not generate yet, d`ont show the buy now button
 
   return (
-      <ButtonStyle onClick={() => console.log("amir")}>{BUY_NOW}</ButtonStyle> //TODO: implement the analytics
+    userId ?
+      <ButtonStyle onClick={ () => sendTrackEvent(ExternalTrackEvents.PRESSED_BUY_NOW_BUTTON, userId, planTitle) }>
+        { BUY_NOW }
+      </ButtonStyle> : <></>
   );
 }
 

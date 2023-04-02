@@ -1,9 +1,9 @@
-import { Price } from "./price-model";
+import { Prices } from "./price-model";
 
 
 export const createNewTable = async () => {
   try {
-    const prices = new Price({
+    const prices = new Prices({
       original: {
         essential: {
           USD: "49.99"

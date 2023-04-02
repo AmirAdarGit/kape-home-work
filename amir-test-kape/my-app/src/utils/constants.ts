@@ -5,6 +5,8 @@ export const BEST_OFFER_YOU_WILL_GET = 'Best Offer you will get!';
 export const FOR_THE_FIRST_YEAR = 'for the first 1 year';
 export const BILLED = 'Billed';
 export const DAYS_MONEY_BACK_GUARANTEE = '30-day money back guarantee';
+export const USER_EVENT_URL = 'http://localhost:4000/userEvents';
+export const GET_PRICE_BY_BUNDLE = 'http://localhost:4000/getPriceByBundle/?bundle=*&currency=usd';
 
 export const getDiscountPerMonthAsString = (discountPerMonth: number | null) => {
   return `Only ${ discountPerMonth }/ month`

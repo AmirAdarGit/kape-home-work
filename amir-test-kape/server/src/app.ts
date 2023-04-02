@@ -6,13 +6,20 @@ import dotenv from 'dotenv';
 import  db  from './database/db-connection';
 import { createNewTable } from "./database/prices-db/create-prices-collection";
 
-dotenv.config();
+export const LOCAL_HOST = 'http://localhost:3000';
 
+dotenv.config();
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cors());
+const whitelist = [
+  LOCAL_HOST,
+];
+const corsOptions = {
+  origin: whitelist,
+};
 
+app.use(cors(corsOptions));
 const router: Router = express.Router();
 app.use('/', router);
 
@@ -21,37 +28,48 @@ db.getConnection();
 
 
 router.get('/getPriceByBundle', async (req: Request, res: Response) => {
-  const bundle = req.query.bundle as string;
-  const currency = req.query.currency as string;
-  let prices;
-  if (bundle && bundle !== '*') {
-    prices = await getPriceByBundleFromDb(bundle, currency)
+  try {
+    const bundle = req.query.bundle as string;
+    const currency = req.query.currency as string;
+
+    let prices;
+    if (bundle && bundle !== '*') {
+      prices = await getPriceByBundleFromDb(bundle, currency)
+    }
+    else {
+      prices = await getAllPriceFromDb();
+    }
+    if (!prices) {
+      res.status(200).json({ error: 'Price not found' });
+    } else {
+      res.json({ prices });
+    }
+  } catch (e) {
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-  else {
-    prices = await getAllPriceFromDb();
-  }
-  if (prices) {
-    res.json({ prices });
-  } else {
-    res.status(404).json({ error: 'Price not found' });
-  }
+
 });
 
 router.post('/userEvents', async (req: Request, res: Response) => {
-  let { eventType, userId } = req.body;
+  try {
+    let { eventType, userId, planTitle } = req.body;
 
-  if (!userId) {
-    userId = await createNewUserId();
-    //return the new user id to the client and save it on the local storage
-  }
-  if (!eventType) {
-    await insertEvent(eventType)
-    // throw error
-  }
-  // from the created user add to the event db the new event with the corresponding data and the user id
+    if (!eventType) {
+      throw new Error("Missing params")
+    }
 
-  console.log("eventType",eventType, "userId",userId)
-  res.json({userId: userId})
+    if (!userId) {
+      userId = await createNewUserId();
+    }
+
+    const newEvent = await insertEvent(eventType, userId, planTitle)
+
+    res.json({userId: userId, newEvent: newEvent})
+  } catch (e) {
+    console.log("Error:", e)
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
 });
 
 

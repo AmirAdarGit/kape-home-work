@@ -1,21 +1,25 @@
-import { Price } from "./database/prices-db/price-model";
+import { Prices } from "./database/prices-db/price-model";
 import { User } from "./database/user-db/user-model";
+import { Event } from "./database/events-db/event-model";
+import { ObjectId } from "mongodb";
 
 export const getAllPriceFromDb = async () => {
-  const allPrices = await Price.find({})
-  console.log(allPrices)
-  return allPrices
+  try{
+    const res = await Prices.find({});
+    return res;
+  } catch (e) {
+    console.log(e)
+  }
+
 }
 export const getPriceByBundleFromDb = async (bundleName: string, currency: string) => { //TODO: add currency to the query
-  const specificBundle = await Price.find(
+  const specificBundle = await Prices.find(
     {},
     {
       [`original.${bundleName}`]: 1,
       [`offers.${bundleName}`]: 1
     }
   );
-  console.log(specificBundle);
-
   return specificBundle
 };
 export const createNewUserId = async () => {
@@ -24,27 +28,17 @@ export const createNewUserId = async () => {
   return userId._id?.toString()
 };
 
-export const insertEvent = async (eventType: string) => {
-  switch (eventType) {
-    case "LANDING_PAGE":
-    {
-      const newLandingPageEventObj = createNewLandingPageEventObject()
-      // create new landing page event object
-      // inset it to the db
-      break;
-    }
-    case "PRESSED_BUY_NOW_BUTTON":
-    {
-      // create new press buy now bytton page event object
-      // inset it to the db
-      break;
-    }
-    default: break;
-  }
+export const insertEvent = async (eventType: string, userId: string, planTitle?: string) => {
+  const eventObj = createNewEventObject(userId, eventType, planTitle)
+  const newEvent = new Event(eventObj)
+  return  await newEvent.save();
 }
 
-const createNewLandingPageEventObject = () => {
+const createNewEventObject = (userId: string, eventType: string, planTitle?: string) => {
   return {
-
+    userId: new ObjectId(userId),
+    eventType: eventType,
+    planTitle: planTitle
   }
+
 }
