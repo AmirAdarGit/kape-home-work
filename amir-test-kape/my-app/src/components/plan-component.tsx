@@ -5,7 +5,7 @@ import DiscountCircleComponent from "./discount-cercle-component";
 import BestValueComponent from "./best-value-component";
 import BuyNowButton from "./buy-now-button-component";
 import dollarIcon from '../icons/dollar.jpeg';
-import { IInfoList, IPlan } from '../utils/interfaces';
+import { IPlan } from '../utils/interfaces';
 import PlanInfoComponent from "./plan-info-component";
 import {
   BEST_OFFER_YOU_WILL_GET,
@@ -43,6 +43,8 @@ export const PlanComponent: React.FC<Props> = ({plan}) => {
 
   let [discountPercentage, setDiscountPercentage] = useState<number | null>(plan.oldPrice);
   let [discountPerMonth, setDiscountPerMonth] = useState<number | null>(plan.price);
+
+  // calculate the discount and discount per month for every plan
   useEffect(() => {
       if (plan.price && plan.oldPrice) {
         setDiscountPercentage(getDiscountPercentageFunc(plan.oldPrice, plan.price));
@@ -51,7 +53,6 @@ export const PlanComponent: React.FC<Props> = ({plan}) => {
     },
     [plan]
   )
-
 
 
   return (

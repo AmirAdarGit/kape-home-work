@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { PlansComponent } from "./components/plans-component";
 import { ExternalTrackEvents } from "./utils/interfaces";
@@ -6,16 +6,17 @@ import { sendTrackEvent } from "./utils/share-function";
 
 function App() {
 
+  const [landingPageComplete, setLandingPageComplete] = useState(false);
 
   useEffect( () => {
-    const userJWT = localStorage.getItem('Authorization');
-    sendTrackEvent(ExternalTrackEvents.LANDING_PAGE, userJWT)
+    const userJWT = localStorage.getItem('JWT');
+    sendTrackEvent(ExternalTrackEvents.LANDING_PAGE, userJWT, setLandingPageComplete)
   }, []);
 
 
   return (
     <div className="App">
-      <PlansComponent/>
+      {landingPageComplete && <PlansComponent/>}
     </div>
   );
 }

@@ -1,18 +1,17 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import  { PlanComponent } from "./plan-component";
+import { PlanComponent } from "./plan-component";
 import { IPlan, IPricing } from "../utils/interfaces";
 import { allPlansFromStates } from "../utils/pricing-data";
-import { injectPlanData } from "../utils/share-function";
-import { DEVICE, GET_PRICE_BY_BUNDLE } from "../utils/constants";
-import axios, { AxiosResponse } from "axios";
+import { getPricesByBundleFromServer, injectPlansPriceData } from "../utils/share-function";
+import { DEVICE } from "../utils/constants";
 
 const WrapperStyle = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
 
-  @media ${DEVICE.mobileL} {
+  @media ${ DEVICE.mobileL } {
     flex-direction: column;
   }
 `;
@@ -22,47 +21,15 @@ export const PlansComponent: React.FC = (() => {
   const [planList, setPlanList] = useState<IPlan[]>();
   const [pricesList, setPricesList] = useState<IPricing | null>(null);
 
-  console.log(pricesList)
   useEffect(() => {
-    const getPricesByBundleFromServer = async () => {
-      try {
-        const response: AxiosResponse = await axios.get(GET_PRICE_BY_BUNDLE);
-        setPricesList(response.data.prices[0])
-      } catch (error: any) {
-        console.error('Error:', error);
-      }
-    }
-    getPricesByBundleFromServer()
-  },[])
+    getPricesByBundleFromServer(setPricesList)
+  }, [])
 
 
   useEffect(() => {
-
     if (pricesList && allPlansFromStates) {
-      const copyPlans: IPlan[] = [];
-      let bestDiscount = 0;
-      let bestPlan: string;
-      allPlansFromStates.forEach((thePrice: IPlan) => {
-        const {
-          copyPlan,
-          currentBestDiscount,
-          currentBestPlan
-        } = injectPlanData(thePrice, pricesList, bestDiscount, bestPlan)
-        bestDiscount = currentBestDiscount;
-        bestPlan = currentBestPlan;
-        copyPlans.push(copyPlan)
-      })
-      const filteredPlans = copyPlans.map(plan => {
-        if (plan.title === bestPlan) {
-          plan.isBestValue = true;
-        }
-        return plan
-      }).filter((plan) => {
-        return plan.price !== null
-      })
-
-      setPlanList(filteredPlans)
-    } else {
+      injectPlansPriceData(allPlansFromStates, pricesList, setPlanList)
+    }else {
       console.log("Cannot get pricing")
     }
   }, [pricesList])
@@ -70,7 +37,7 @@ export const PlansComponent: React.FC = (() => {
 
   return (
     <WrapperStyle>
-      {planList &&
+      { planList &&
         planList.map((plan, index) => {
           return <PlanComponent key={ index } plan={ plan }/>
         }) }
