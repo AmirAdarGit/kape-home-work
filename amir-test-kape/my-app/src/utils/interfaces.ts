@@ -29,3 +29,28 @@ export enum ExternalTrackEvents {
   LANDING_PAGE = 'LANDING_PAGE',
   PRESSED_BUY_NOW_BUTTON = 'PRESSED_BUY_NOW_BUTTON',
 }
+
+export interface IPricing {
+  original: {
+    essential?: {
+      USD: number;
+    };
+    advanced?: {
+      USD: number;
+    };
+    vpn_addon?: {
+      USD: number;
+    };
+  };
+  offers: {
+    essential?: {
+      USD: number;
+    };
+    advanced?: {
+      USD: number;
+    };
+    vpn_addon?: {
+      USD: number;
+    };
+  };
+}
