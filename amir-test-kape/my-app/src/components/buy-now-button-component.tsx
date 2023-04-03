@@ -9,13 +9,13 @@ interface Props {
   planTitle: string;
 }
 
-export const BuyNowButton: React.FC<Props> = ({planTitle}) => {
+export const BuyNowButton: React.FC<Props> = ({ planTitle }) => {
 
-  const userId = localStorage.getItem('JWT'); // on landing page we generate userId so if not generate yet, d`ont show the buy now button
+  const token = localStorage.getItem('JWT'); // on landing page we generate userId so if not generate yet, d`ont show the buy now button
 
   return (
-    userId ?
-      <ButtonStyle onClick={ () => sendTrackEvent(ExternalTrackEvents.PRESSED_BUY_NOW_BUTTON, userId, planTitle) }>
+    token ?
+      <ButtonStyle onClick={ () => sendTrackEvent(ExternalTrackEvents.PRESSED_BUY_NOW_BUTTON, token, planTitle) }>
         { BUY_NOW }
       </ButtonStyle> : <></>
   );

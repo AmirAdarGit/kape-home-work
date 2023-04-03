@@ -1,7 +1,13 @@
 import { ExternalTrackEvents, IPlan, IPricing } from "./interfaces";
-import axios, { AxiosResponse } from "axios";
-import { GET_PRICE_BY_BUNDLE, USER_EVENT_URL } from "./constants";
-
+import axios, { AxiosResponse,  } from "axios";
+import {
+  EXTENDED,
+  GET_PRICE_BY_BUNDLE,
+  JWT,
+  USER_EVENT_URL,
+  VPN_ADDON,
+  ADVANCED,
+} from "./constants";
 
 export const getDiscountPercentageFunc = (oldPrice: number, newPrice: number) => {
   return Math.floor(((Number(oldPrice) - Number(newPrice)) / Number(oldPrice)) * 100);
@@ -11,40 +17,39 @@ export const getDiscountPerMonthFunc = (newPrice: number) => {
   return Number((newPrice / 12).toFixed(2));
 }
 
-
-export const sendTrackEvent = async (eventType: string, userJWT: string | null, planTitle?: string) => {
+export const sendTrackEvent = async (eventType: string, token: string | null, planTitle?: string) => {
   try {
     const response: AxiosResponse = await axios.post(
       USER_EVENT_URL,
       {eventType, planTitle},
       {
         headers: {
-          'Authorization': `Bearer ${ userJWT }`
+          'Authorization': `Bearer ${ token }`
         }
       });
 
     if (eventType === ExternalTrackEvents.LANDING_PAGE) {
       const jwt = response.data.jwt;
-      if (!userJWT) {
-        localStorage.setItem('JWT', jwt);
+      if (!token) {
+        localStorage.setItem(JWT, jwt);
       }
     }
   } catch (error: any) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
   }
 }
 export const getPricesByBundleFromServer = async () => {
   try {
-    const JWT = localStorage.getItem('JWT');
+    const jwtFromLocalStorage = localStorage.getItem(`${JWT}`);
     const response: AxiosResponse = await axios.get(GET_PRICE_BY_BUNDLE,
       {
         headers: {
-          'Authorization': `Bearer ${ JWT }`
+          'Authorization': `Bearer ${ jwtFromLocalStorage }`
         }
       });
     return response.data.prices[0];
   } catch (error: any) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
   }
 }
 
@@ -90,9 +95,9 @@ export const injectPlanData = (thePrice: IPlan, allPlansFromServer: any, current
     }
   }
 
-  if (copyPlan.type === 'Extended') {
-    oldPrice = Number(allPlansFromServer.original[`advanced`]?.USD) + Number(allPlansFromServer.original[`vpn_addon`]?.USD);
-    newPrice = Number(allPlansFromServer.offers[`advanced`]?.USD) + Number(allPlansFromServer.offers[`vpn_addon`]?.USD);
+  if (copyPlan.type === EXTENDED) {
+    oldPrice = Number(allPlansFromServer.original[ADVANCED]?.USD) + Number(allPlansFromServer.original[VPN_ADDON]?.USD);
+    newPrice = Number(allPlansFromServer.offers[ADVANCED]?.USD) + Number(allPlansFromServer.offers[VPN_ADDON]?.USD);
 
 
     if (oldPrice && newPrice) {
@@ -104,7 +109,6 @@ export const injectPlanData = (thePrice: IPlan, allPlansFromServer: any, current
         currentBestDiscount = copyPlan.discountPercentage;
         currentBestPlan = copyPlan.title;
       }
-
     }
   }
   return {copyPlan, currentBestDiscount, currentBestPlan};

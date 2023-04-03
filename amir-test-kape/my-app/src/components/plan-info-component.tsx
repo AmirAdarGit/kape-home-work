@@ -13,16 +13,14 @@ interface Props {
   planInfo: IMoreInfo
 }
 
-
-export const PlanInfoComponent: React.FC<Props> = (({planInfo}) => {
+export const PlanInfoComponent: React.FC<Props> = (({ planInfo }) => {
 
   return (
     <WrapperStyle shouldMark={ planInfo.isMarked }>
-      <CheckIconStyled src={ check }
-                       alt="My Icon"/>
+      <CheckIconStyled src={ check } alt="Check Icon"/>
       <PlanInfoFullTitleStyled>
         <PlanInfoTitleStyled isBold={ planInfo.isBold }>{ planInfo.infoTitle }</PlanInfoTitleStyled>
-        <PlanInfoSubTitleStyled/>
+        <PlanInfoSubTitleStyled>{ planInfo.moreInfo }</PlanInfoSubTitleStyled>
       </PlanInfoFullTitleStyled>
     </WrapperStyle>
   );

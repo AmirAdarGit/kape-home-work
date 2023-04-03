@@ -1,5 +1,23 @@
 import styled from "@emotion/styled";
 
+export const WrapperStyle = styled.div`
+  border-radius: 16px;
+  width: 250px;
+  height: auto;
+  background-color: white;
+  position: relative;
+  margin: 50px;
+  border: solid black 1px;
+`;
+
+export const PricingContentStyle = styled.div`
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+
 export const PriceTitleStyled = styled.div`
   font-size: 20px;
   font-weight: bold;

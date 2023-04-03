@@ -4,6 +4,10 @@ export const DISCOUNT = 'Discount';
 export const BEST_OFFER_YOU_WILL_GET = 'Best Offer you will get!';
 export const FOR_THE_FIRST_YEAR = 'for the first 1 year';
 export const BILLED = 'Billed';
+export const JWT = 'JWT';
+export const EXTENDED = 'Extended';
+export const ADVANCED = 'advanced';
+export const VPN_ADDON = 'vpn_addon';
 export const DAYS_MONEY_BACK_GUARANTEE = '30-day money back guarantee';
 export const USER_EVENT_URL = 'http://localhost:4000/userEvents';
 export const GET_PRICE_BY_BUNDLE = 'http://localhost:4000/getPriceByBundle/?bundle=*&currency=usd';
@@ -25,20 +29,11 @@ export const generateInfoTitleForBestValuePlan = (discountPercentage: number | n
   }
 }
 const SCREEN_MAX_SIZE = {
-  mobileS: '374px',
-  mobileM: '520px',
   mobileL: '767px',
-  tablet: '1023px',
-  laptop: '1300px',
 };
 
-
 export const DEVICE = {
-  mobileS: `(max-width: ${SCREEN_MAX_SIZE.mobileS})`,
-  mobileM: `(max-width: ${SCREEN_MAX_SIZE.mobileM})`,
   mobileL: `(max-width: ${SCREEN_MAX_SIZE.mobileL})`,
-  tablet: `(max-width: ${SCREEN_MAX_SIZE.tablet})`,
-  laptop: `(max-width: ${SCREEN_MAX_SIZE.laptop})`,
 };
 
 

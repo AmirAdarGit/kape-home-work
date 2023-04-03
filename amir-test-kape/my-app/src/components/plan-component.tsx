@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
 import { getDiscountPercentageFunc, getDiscountPerMonthFunc } from "../utils/common-functions";
 import DiscountCircleComponent from "./discount-cercle-component";
 import BestValueComponent from "./best-value-component";
@@ -15,6 +14,8 @@ import {
   getDiscountPerMonthAsString
 } from "../utils/constants";
 import {
+  WrapperStyle,
+  PricingContentStyle,
   PriceTitleStyled,
   PriceSubTitleStyled,
   MonthlyPayStyled,
@@ -31,25 +32,6 @@ interface Props {
   plan: IPlan;
 }
 
-
-const WrapperStyle = styled.div`
-  border-radius: 16px;
-  width: 250px;
-  height: auto;
-  background-color: white;
-  position: relative;
-  margin: 50px;
-  border: solid black 1px;
-`;
-
-const PricingContentStyle = styled.div`
-  padding-top: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-
 export const PlanComponent: React.FC<Props> = ({plan}) => {
 
   let [discountPercentage, setDiscountPercentage] = useState<number | null>(plan.oldPrice);
@@ -65,9 +47,7 @@ export const PlanComponent: React.FC<Props> = ({plan}) => {
     [plan]
   )
 
-
   return (
-    <>
       <WrapperStyle>
         <DiscountCircleComponent discountPercentage={ discountPercentage }/>
         <PricingContentStyle>
@@ -98,7 +78,6 @@ export const PlanComponent: React.FC<Props> = ({plan}) => {
 
         </PricingContentStyle>
       </WrapperStyle>
-    </>
   );
 }
 

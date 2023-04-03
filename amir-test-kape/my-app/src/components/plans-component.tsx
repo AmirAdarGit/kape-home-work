@@ -22,8 +22,6 @@ export const PlansComponent: React.FC = (() => {
   useEffect(() => {
     if (pricesList && allPlansFromStates) {
       setPlanList(injectPlansPriceData(allPlansFromStates, pricesList))
-    }else {
-      console.log("Cannot get pricing")
     }
   }, [pricesList])
 

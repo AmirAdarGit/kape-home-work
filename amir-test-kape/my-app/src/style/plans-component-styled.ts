@@ -13,6 +13,5 @@ export const WrapperStyle = styled.div`
   @media ${ DEVICE.mobileL } {
     flex-direction: column;
     top: 105px;
-
   }
 `;

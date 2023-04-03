@@ -16,10 +16,12 @@ export const CheckIconStyled = styled.img`
   align-self: start;
   padding: 4px;
 `;
+
 export const PlanInfoFullTitleStyled = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 export const PlanInfoTitleStyled = styled.div<{isBold: boolean}>`
   align-self: start;
   font-weight: bold;

@@ -12,6 +12,7 @@ export const LogoStyled = styled.div`
     top: 15px
   }
 `;
+
 export const TitleStyled = styled.div`
   font-size: 40px;
   font-weight: bold;
@@ -19,6 +20,7 @@ export const TitleStyled = styled.div`
     font-size: 15px;
     font-weight: bold;  }
 `;
+
 export const SubTitleStyled = styled.div`
 
   @media ${ DEVICE.mobileL } {
@@ -31,3 +33,8 @@ export const CoverImg = styled.img`
     width: 100vw
   }
 `;
+
+export const IntegoLogoImgStyled = styled.img`
+  zIndex: 1;
+`;
+
