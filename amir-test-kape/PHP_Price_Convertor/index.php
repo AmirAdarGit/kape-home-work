@@ -45,7 +45,6 @@ class PriceConverter
         } else if ($convertAmount >= 1000 && $convertAmount < 10000) {
             $finalNumber = (floor($convertAmount / 10) * 10) + 10;
         } else if ($convertAmount >= 10000) {
-            echo $convertAmount;
             $finalNumber = (floor($convertAmount / 100) * 100) + 100;
         }
         return $this->formatPrice($finalNumber, $this->currency);
