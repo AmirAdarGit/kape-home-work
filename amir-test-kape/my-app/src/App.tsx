@@ -3,8 +3,8 @@ import './App.css';
 import { PlansComponent } from "./components/plans-component";
 import { ExternalTrackEvents } from "./utils/interfaces";
 import { sendTrackEvent } from "./utils/common-functions";
-import styled from "@emotion/styled";
 import {LogoStyled, TitleStyled, SubTitleStyled, CoverImg }  from "./style/app.styled";
+import { COVER_IMG, INTEGO_LOGO_IMG_SRC, SUB_TITLE_PAGE, TITLE_PAGE } from "./utils/constants";
 
 
 
@@ -22,11 +22,11 @@ function App() {
   return (
     <div className="App">
         <LogoStyled>
-          <img src={ "https://antivirus.intego.com/img/mac_av/logo_white.png" } style={ {zIndex: '1'} }/>
-          <TitleStyled >Get the Ultimate Protection for your PC</TitleStyled>
-          <SubTitleStyled>Choose the best plan for your needs</SubTitleStyled>
+          <img src={ INTEGO_LOGO_IMG_SRC } style={ {zIndex: '1'} }/>
+          <TitleStyled >{TITLE_PAGE}</TitleStyled>
+          <SubTitleStyled>{SUB_TITLE_PAGE}</SubTitleStyled>
         </LogoStyled>
-      <CoverImg src={ "https://antivirus.intego.com/img/mac_av/hero_bg_desktop.webp" }/>
+      <CoverImg src={ COVER_IMG }/>
       { landingPageComplete && <PlansComponent/> }
     </div>
   );

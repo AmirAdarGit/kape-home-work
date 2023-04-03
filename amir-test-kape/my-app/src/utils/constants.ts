@@ -7,6 +7,10 @@ export const BILLED = 'Billed';
 export const DAYS_MONEY_BACK_GUARANTEE = '30-day money back guarantee';
 export const USER_EVENT_URL = 'http://localhost:4000/userEvents';
 export const GET_PRICE_BY_BUNDLE = 'http://localhost:4000/getPriceByBundle/?bundle=*&currency=usd';
+export const TITLE_PAGE = 'Get the Ultimate Protection for your PC';
+export const SUB_TITLE_PAGE = 'Choose the best plan for your needs';
+export const INTEGO_LOGO_IMG_SRC = 'https://antivirus.intego.com/img/mac_av/logo_white.png';
+export const COVER_IMG = 'https://antivirus.intego.com/img/mac_av/hero_bg_desktop.webp';
 
 export const getDiscountPerMonthAsString = (discountPerMonth: number | null) => {
   return `Only ${ discountPerMonth }/ month`
