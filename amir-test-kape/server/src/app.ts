@@ -72,12 +72,12 @@ router.post('/userEvents', authMiddleware(permissions), async (req: Request, res
 
 });
 
-
-router.delete('/delete-users-and-events-from-db', async (req: Request, res: Response) => {
-  await Event.deleteMany({});
-  await User.deleteMany({});
-  res.status(200).json({message: 'Events and User documents removed from the events collection'});
-});
+// for delete all the data in the users and events collections.
+// router.delete('/delete-users-and-events-from-db', async (req: Request, res: Response) => {
+//   await Event.deleteMany({});
+//   await User.deleteMany({});
+//   res.status(200).json({message: 'Events and User documents removed from the events collection'});
+// });
 
 
 export default app;

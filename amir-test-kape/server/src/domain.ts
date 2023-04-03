@@ -3,6 +3,7 @@ import { Event } from "./database/events-db/event-model";
 import { createNewEventObject } from "./database/db-domain";
 
 
+// the user id is used to manual the event by different users.
 export const createNewUserId = async () => {
   const newUser = new User()
   const userId = await newUser.save();
