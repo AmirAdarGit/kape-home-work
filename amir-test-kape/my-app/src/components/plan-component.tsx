@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { getDiscountPercentageFunc, getDiscountPerMonthFunc } from "../utils/share-function";
+import { getDiscountPercentageFunc, getDiscountPerMonthFunc } from "../utils/common-functions";
 import DiscountCircleComponent from "./discount-cercle-component";
 import BestValueComponent from "./best-value-component";
 import BuyNowButton from "./buy-now-button-component";

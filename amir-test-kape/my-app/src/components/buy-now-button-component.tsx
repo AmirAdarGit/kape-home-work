@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { BUY_NOW } from "../utils/constants";
-import { sendTrackEvent } from "../utils/share-function";
+import { sendTrackEvent } from "../utils/common-functions";
 import { ExternalTrackEvents } from "../utils/interfaces";
 
 
@@ -30,7 +30,7 @@ export const BuyNowButton: React.FC<Props> = ({planTitle}) => {
 
   return (
     userId ?
-      <ButtonStyle onClick={ () => sendTrackEvent(ExternalTrackEvents.PRESSED_BUY_NOW_BUTTON, userId, undefined, planTitle) }>
+      <ButtonStyle onClick={ () => sendTrackEvent(ExternalTrackEvents.PRESSED_BUY_NOW_BUTTON, userId, planTitle) }>
         { BUY_NOW }
       </ButtonStyle> : <></>
   );

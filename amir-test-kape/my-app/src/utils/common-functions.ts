@@ -12,7 +12,7 @@ export const getDiscountPerMonthFunc = (newPrice: number) => {
 }
 
 
-export const sendTrackEvent = async (eventType: string, userJWT: string | null, setLandingPageComplete?: Function, planTitle?: string) => {
+export const sendTrackEvent = async (eventType: string, userJWT: string | null, planTitle?: string) => {
   try {
     const response: AxiosResponse = await axios.post(
       USER_EVENT_URL,
@@ -23,18 +23,17 @@ export const sendTrackEvent = async (eventType: string, userJWT: string | null, 
         }
       });
 
-    if (eventType === ExternalTrackEvents.LANDING_PAGE && setLandingPageComplete) {
+    if (eventType === ExternalTrackEvents.LANDING_PAGE) {
       const jwt = response.data.jwt;
       if (!userJWT) {
         localStorage.setItem('JWT', jwt);
       }
-      setLandingPageComplete(true);
     }
   } catch (error: any) {
     console.error('Error:', error);
   }
 }
-export const getPricesByBundleFromServer = async (setPricesList: Function) => {
+export const getPricesByBundleFromServer = async () => {
   try {
     const JWT = localStorage.getItem('JWT');
     const response: AxiosResponse = await axios.get(GET_PRICE_BY_BUNDLE,
@@ -43,13 +42,13 @@ export const getPricesByBundleFromServer = async (setPricesList: Function) => {
           'Authorization': `Bearer ${ JWT }`
         }
       });
-    setPricesList(response.data.prices[0])
+    return response.data.prices[0];
   } catch (error: any) {
     console.error('Error:', error);
   }
 }
 
-export const injectPlansPriceData = (allPlansFromStates: Array<IPlan>, pricesList: IPricing, setPlanList: Function) => {
+export const injectPlansPriceData = (allPlansFromStates: Array<IPlan>, pricesList: IPricing) => {
   const copyPlans: IPlan[] = [];
   let bestDiscount = 0;
   let bestPlan: string;
@@ -71,9 +70,7 @@ export const injectPlansPriceData = (allPlansFromStates: Array<IPlan>, pricesLis
   }).filter((plan) => {
     return plan.price !== null
   })
-
-  setPlanList(filteredPlans)
-
+  return(filteredPlans)
 }
 
 

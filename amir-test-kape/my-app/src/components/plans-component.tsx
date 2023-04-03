@@ -3,16 +3,22 @@ import styled from "@emotion/styled";
 import { PlanComponent } from "./plan-component";
 import { IPlan, IPricing } from "../utils/interfaces";
 import { allPlansFromStates } from "../utils/pricing-data";
-import { getPricesByBundleFromServer, injectPlansPriceData } from "../utils/share-function";
+import { getPricesByBundleFromServer, injectPlansPriceData } from "../utils/common-functions";
 import { DEVICE } from "../utils/constants";
 
 const WrapperStyle = styled.div`
   display: flex;
-  justify-content: center;
   flex-direction: row;
-
+  justify-content: center;
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  
   @media ${ DEVICE.mobileL } {
     flex-direction: column;
+    top: 105px;
+
   }
 `;
 
@@ -22,13 +28,15 @@ export const PlansComponent: React.FC = (() => {
   const [pricesList, setPricesList] = useState<IPricing | null>(null);
 
   useEffect(() => {
-    getPricesByBundleFromServer(setPricesList)
+    getPricesByBundleFromServer().then((price) => {
+      setPricesList(price)
+    })
   }, [])
 
 
   useEffect(() => {
     if (pricesList && allPlansFromStates) {
-      injectPlansPriceData(allPlansFromStates, pricesList, setPlanList)
+      setPlanList(injectPlansPriceData(allPlansFromStates, pricesList))
     }else {
       console.log("Cannot get pricing")
     }
