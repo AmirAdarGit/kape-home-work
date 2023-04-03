@@ -20,12 +20,12 @@ class PriceConverter
             return $this->formatPrice($this->price, 'USD');
         }
 
-        $url = "https://api.apilayer.com/exchangerates_data/convert?to={$this->currency}&from=USD&amount={$this->price}"; // API
+        $url = "https://api.apilayer.com/exchangerates_data/convert?to={$this->currency}&from=USD&amount={$this->price}"; 
 
         $ch = curl_init($url);
 
-        curl_setopt($ch, CURLOPT_URL, $url); // Set the URL
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $headers = [
             'Content-Type: application/json',
