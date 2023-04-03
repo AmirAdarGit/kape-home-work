@@ -20,12 +20,12 @@ class PriceConverter
             return $this->formatPrice($this->price, 'USD');
         }
 
-        $url = "https://api.apilayer.com/exchangerates_data/convert?to={$this->currency}&from=USD&amount={$this->price}";
+        $url = "https://api.apilayer.com/exchangerates_data/convert?to={$this->currency}&from=USD&amount={$this->price}"; // API
 
         $ch = curl_init($url);
 
-        curl_setopt($ch, CURLOPT_URL, $url); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
+        curl_setopt($ch, CURLOPT_URL, $url); // Set the URL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
 
         $headers = [
             'Content-Type: application/json',
@@ -37,11 +37,15 @@ class PriceConverter
         $array = json_decode($response, true);
         $convertAmount = $array['result'];
 
-        if ($convertAmount >= 10 && $convertAmount < 1000) {
+
+        if ($convertAmount < 10) {
+            $finalNumber = floor($convertAmount * 100) / 100;
+        } else if ($convertAmount >= 10 && $convertAmount < 1000) {
             $finalNumber = ceil($convertAmount) - 0.01;
         } else if ($convertAmount >= 1000 && $convertAmount < 10000) {
             $finalNumber = (floor($convertAmount / 10) * 10) + 10;
-        } else {
+        } else if ($convertAmount >= 10000) {
+            echo $convertAmount;
             $finalNumber = (floor($convertAmount / 100) * 100) + 100;
         }
         return $this->formatPrice($finalNumber, $this->currency);
@@ -103,6 +107,6 @@ class PriceConverter
     }
 }
 
-$priceConverter = new PriceConverter(2933, 'ZAR');
+$priceConverter = new PriceConverter(3, 'EUR');
 echo $priceConverter->convert();
 ?>
